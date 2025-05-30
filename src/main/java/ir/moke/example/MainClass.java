@@ -18,7 +18,7 @@ public class MainClass {
     public static void main(String[] args) {
         httpPost("/api/v1/client", new ClientControllerAdd());
         httpGet("/api/v1/client", new ClientControllerList());
-        httpPost("/api/v1/address/:clientId", new AddressControllerAdd());
+        httpPost("/api/v1/address/{clientId}", new AddressControllerAdd());
         httpGet("/api/v1/address", new AddressControllerFind());
     }
 }
