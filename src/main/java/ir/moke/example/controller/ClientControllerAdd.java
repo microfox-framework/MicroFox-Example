@@ -49,9 +49,9 @@ public class ClientControllerAdd implements Route {
     )
     public void handle(Request request, Response response) {
         RequestClientDTO dto = request.body(RequestClientDTO.class);
-        Client client = ControllerMapper.mapToClient(dto);
+        Client client = DTOMapper.mapToClient(dto);
         AddressBookService.saveClient(client);
         logger.info("Add new client with id: {}", client.getId());
-        response.body(ControllerMapper.mapResponseClientDTO(client));
+        response.body(DTOMapper.mapResponseClientDTO(client));
     }
 }

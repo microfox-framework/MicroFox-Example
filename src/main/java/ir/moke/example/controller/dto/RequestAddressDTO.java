@@ -1,10 +1,12 @@
 package ir.moke.example.controller.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(name = "RequestAddressDTO", description = "Address DTO")
 public record RequestAddressDTO(
-        @Schema(description = "Address's country", example = "Iran")
+        @Schema(description = "Address's country", example = "Iran") @NotEmpty @NotNull
         String country,
         @Schema(description = "Address's state", example = "Tehran")
         String state,

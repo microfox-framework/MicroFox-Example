@@ -42,7 +42,7 @@ public class ClientControllerList implements Route {
     public void handle(Request request, Response response) {
         List<Client> allClients = AddressBookService.findAllClients();
         logger.info("Fetch all clients count: {}", allClients.size());
-        List<ResponseClientDTO> list = allClients.stream().map(ControllerMapper::mapResponseClientDTO).toList();
+        List<ResponseClientDTO> list = allClients.stream().map(DTOMapper::mapResponseClientDTO).toList();
         response.body(list);
     }
 }

@@ -55,7 +55,7 @@ public class AddressControllerFind implements Route {
             String id = request.queryParameter("id");
             Address address = AddressBookService.findAddress(Long.parseLong(id));
             if (address != null) {
-                response.body(ControllerMapper.mapToResponseAddressDTO(address));
+                response.body(DTOMapper.mapToResponseAddressDTO(address));
             } else {
                 response.status(HttpServletResponse.SC_NO_CONTENT);
             }

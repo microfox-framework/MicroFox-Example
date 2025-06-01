@@ -9,7 +9,7 @@ import ir.moke.example.persistence.model.Client;
 
 import java.util.List;
 
-public class ControllerMapper {
+public class DTOMapper {
 
     public static Address mapToAddress(RequestAddressDTO dto) {
         return new Address(dto.street(), dto.city(), dto.state(), dto.country(), dto.postalCode());
@@ -32,7 +32,7 @@ public class ControllerMapper {
     }
 
     public static ResponseClientDTO mapResponseClientDTO(Client client) {
-        List<ResponseAddressDTO> responseAddressDTOS = client.getAddresses() != null ? client.getAddresses().stream().map(ControllerMapper::mapToResponseAddressDTO).toList() : List.of();
+        List<ResponseAddressDTO> responseAddressDTOS = client.getAddresses() != null ? client.getAddresses().stream().map(DTOMapper::mapToResponseAddressDTO).toList() : List.of();
         return new ResponseClientDTO(client.getId(), client.getName(), client.getFamily(), responseAddressDTOS);
     }
 }

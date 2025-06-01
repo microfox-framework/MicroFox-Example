@@ -1,7 +1,7 @@
 package ir.moke.example.persistence;
 
 import ir.moke.example.MainClass;
-import ir.moke.microfox.persistence.BatisExecutor;
+import ir.moke.microfox.persistence.MicroFoxSQL;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
@@ -23,7 +23,7 @@ public class DB {
         configuration.setEnvironment(environment);
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.addMappers("ir.moke.example.persistence.mapper");
-        BatisExecutor.configure(configuration);
+        MicroFoxSQL.configure(configuration);
     }
 
     private static DataSource getDataSource() {

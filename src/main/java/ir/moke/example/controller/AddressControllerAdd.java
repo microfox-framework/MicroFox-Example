@@ -2,7 +2,6 @@ package ir.moke.example.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -65,14 +64,10 @@ public class AddressControllerAdd implements Route {
             return;
         }
 
-        try {
-            RequestAddressDTO requestAddressDTO = request.body(RequestAddressDTO.class);
-            Address address = ControllerMapper.mapToAddress(requestAddressDTO);
-            AddressBookService.saveAddress(address, Long.parseLong(id));
+        RequestAddressDTO requestAddressDTO = request.body(RequestAddressDTO.class);
+        Address address = DTOMapper.mapToAddress(requestAddressDTO);
+        AddressBookService.saveAddress(address, Long.parseLong(id));
 
-            response.body(ControllerMapper.mapToResponseAddressDTO(address));
-        } catch (Exception e) {
-            response.body(e.getMessage());
-        }
+        response.body(DTOMapper.mapToResponseAddressDTO(address));
     }
 }
