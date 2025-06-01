@@ -1,6 +1,7 @@
 package ir.moke.example.persistence.model;
 
-import ir.moke.microfox.persistence.Column;
+
+import jakarta.persistence.Column;
 
 public class Address {
     private Long id;
@@ -9,15 +10,15 @@ public class Address {
     private String state;
     private String country;
 
-    @Column("postal_code")
+    @Column(name = "postal_code")
     private String postalCode;
-    @Column("phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     public Address() {
     }
 
-    public Address(String street, String city, String state, String country, String postalCode) {
+    public Address(String country, String state, String city, String street, String postalCode) {
         this.street = street;
         this.city = city;
         this.state = state;

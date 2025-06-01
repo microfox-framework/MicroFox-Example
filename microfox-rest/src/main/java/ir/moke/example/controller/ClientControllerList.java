@@ -4,34 +4,25 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import ir.moke.example.controller.dto.RequestClientDTO;
-import ir.moke.example.controller.dto.ResponseClientDTO;
-import ir.moke.example.persistence.model.Client;
-import ir.moke.example.service.AddressBookService;
+import ir.moke.example.Client;
+import ir.moke.example.InMemoryDB;
 import ir.moke.microfox.http.Request;
 import ir.moke.microfox.http.Response;
 import ir.moke.microfox.http.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientControllerAdd implements Route {
-    private static final Logger logger = LoggerFactory.getLogger(ClientControllerAdd.class);
+import java.util.List;
+
+public class ClientControllerList implements Route {
+    private static final Logger logger = LoggerFactory.getLogger(ClientControllerList.class);
 
     @Override
     @Operation(
-            summary = "Add new client",
+            summary = "List clients",
             tags = "client",
-            operationId = "add",
-            requestBody = @RequestBody(
-                    description = "Client DTO",
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = RequestClientDTO.class)
-                    )
-            ),
+            operationId = "list",
             responses = {
                     @ApiResponse(
                             description = "Successfully operation",
@@ -39,7 +30,7 @@ public class ClientControllerAdd implements Route {
                             content = @Content(
                                     mediaType = "application/json",
                                     array = @ArraySchema(
-                                            schema = @Schema(implementation = ResponseClientDTO.class)
+                                            schema = @Schema(implementation = Client.class)
                                     )
                             )
                     ),
@@ -48,10 +39,8 @@ public class ClientControllerAdd implements Route {
             }
     )
     public void handle(Request request, Response response) {
-        RequestClientDTO dto = request.body(RequestClientDTO.class);
-        Client client = DTOMapper.mapToClient(dto);
-        AddressBookService.saveClient(client);
-        logger.info("Add new client with id: {}", client.getId());
-        response.body(DTOMapper.mapResponseClientDTO(client));
+        List<Client> list = InMemoryDB.list();
+        logger.info("Fetch all clients count: {}", list.size());
+        response.body(list);
     }
 }

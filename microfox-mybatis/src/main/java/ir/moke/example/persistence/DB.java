@@ -1,6 +1,6 @@
 package ir.moke.example.persistence;
 
-import ir.moke.example.MainClass;
+import ir.moke.example.MyBatisRunner;
 import ir.moke.microfox.persistence.MicroFoxSQL;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -51,7 +51,7 @@ public class DB {
     }
 
     private static List<String> loadSqlScript() {
-        try (InputStream inputStream = MainClass.class.getClassLoader().getResourceAsStream("initialize_db.sql")) {
+        try (InputStream inputStream = MyBatisRunner.class.getClassLoader().getResourceAsStream("initialize_db.sql")) {
             if (inputStream != null) {
                 String content = new String(inputStream.readAllBytes());
                 return Arrays.stream(content.replaceAll("\\n", "").replaceAll("\\s+", " ").split(";")).toList();
