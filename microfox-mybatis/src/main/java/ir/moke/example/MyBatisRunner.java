@@ -9,8 +9,7 @@ import ir.moke.kafir.utils.JsonUtils;
 
 import java.util.List;
 
-import static ir.moke.microfox.MicroFox.sqlExecute;
-import static ir.moke.microfox.MicroFox.sqlFetch;
+import static ir.moke.microfox.MicroFox.mybatis;
 
 public class MyBatisRunner {
     static {
@@ -23,11 +22,11 @@ public class MyBatisRunner {
         Address a2 = new Address("Iran", "Golestan", "Gorgan", "Azadi", "951753464");
         Client client = new Client("Mahdi", "Sheikh Hosseini", List.of(a1, a2));
 
-        sqlExecute("h2", ClientMapper.class, clientMapper -> clientMapper.save(client));
-        sqlExecute("h2", AddressMapper.class, addressMapper -> addressMapper.save(a1, client));
-        sqlExecute("h2", AddressMapper.class, addressMapper -> addressMapper.save(a2, client));
+        mybatis("h2", ClientMapper.class).save(client);
+        mybatis("h2", AddressMapper.class).save(a1, client);
+        mybatis("h2", AddressMapper.class).save(a2, client);
 
-        List<Address> addressList = sqlFetch("h2", AddressMapper.class, addressMapper -> addressMapper.findAddressByClientId(1));
+        List<Address> addressList = mybatis("h2", AddressMapper.class).findAddressByClientId(1);
 
         for (Address address : addressList) {
             System.out.println(JsonUtils.toJson(address));

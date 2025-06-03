@@ -1,11 +1,13 @@
 package ir.moke.example.persistence;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import ir.moke.example.MyBatisRunner;
-import ir.moke.microfox.persistence.MicroFoxSQL;
+import ir.moke.microfox.db.mybatis.MicroFoxMyBatis;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.h2.jdbcx.JdbcDataSource;
+import org.h2.Driver;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -18,25 +20,25 @@ import java.util.List;
 public class DB {
 
     public static void initializeMyBatis() {
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(Driver.class.getCanonicalName());
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:testdb;MODE=Oracle;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false");
+        hikariConfig.setUsername("sa");
+        hikariConfig.setPassword("sa");
+        HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
+
+        Environment environment = new Environment("h2", new JdbcTransactionFactory(), hikariDataSource);
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("h2", new JdbcTransactionFactory(), getDataSource());
         configuration.setEnvironment(environment);
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.addMappers("ir.moke.example.persistence.mapper");
-        MicroFoxSQL.configure(configuration);
-    }
 
-    private static DataSource getDataSource() {
-        JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL("jdbc:h2:mem:testdb;MODE=Oracle;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false");
-        dataSource.setUser("sa");
-        dataSource.setPassword("sa");
-        return dataSource;
+        MicroFoxMyBatis.configure(hikariDataSource, configuration);
     }
 
     public static void initializeDatabase() {
         try {
-            DataSource dataSource = getDataSource();
+            DataSource dataSource = MicroFoxMyBatis.getDatasourceMap("h2");
             Connection connection = dataSource.getConnection();
             List<String> lines = loadSqlScript();
             if (lines != null) {

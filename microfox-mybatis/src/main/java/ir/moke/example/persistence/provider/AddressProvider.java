@@ -2,7 +2,7 @@ package ir.moke.example.persistence.provider;
 
 import ir.moke.example.persistence.model.Address;
 import ir.moke.example.persistence.model.Client;
-import ir.moke.microfox.persistence.SqlUtils;
+import ir.moke.microfox.db.mybatis.MyBatisUtils;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public class AddressProvider {
         Client client = (Client) params.get("client");
         return new SQL()
                 .INSERT_INTO("address")
-                .VALUES(SqlUtils.getColumns(Address.class) + ",client_id", SqlUtils.getValues(address) + "," + client.getId())
+                .VALUES(MyBatisUtils.getColumns(Address.class) + ",client_id", MyBatisUtils.getValues(address) + "," + client.getId())
                 .toString();
     }
 
@@ -26,7 +26,7 @@ public class AddressProvider {
 
     public String selectById(long id) {
         return new SQL()
-                .SELECT(SqlUtils.getColumns(Address.class))
+                .SELECT(MyBatisUtils.getColumns(Address.class))
                 .FROM("address")
                 .WHERE("id=#{id}")
                 .toString();
