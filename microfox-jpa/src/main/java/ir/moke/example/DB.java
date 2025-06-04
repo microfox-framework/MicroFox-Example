@@ -21,7 +21,7 @@ public class DB {
         HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
 
         JpaConfig databaseConfig = new JpaConfig.Builder()
-                .setPersistenceUnit("h2-connection")
+                .setPersistenceUnit("h2")
                 .setProvider(new HibernatePersistenceProvider())
                 .setHbm2ddl("update")
                 .setDialect(H2Dialect.class)
@@ -29,6 +29,6 @@ public class DB {
                 .setPackages(List.of("ir.moke.example.entity"))
                 .build();
 
-        MicroFoxJpa.createConnectionPoolEntityManagerFactory(hikariDataSource, databaseConfig);
+        MicroFoxJpa.register(hikariDataSource, databaseConfig);
     }
 }
