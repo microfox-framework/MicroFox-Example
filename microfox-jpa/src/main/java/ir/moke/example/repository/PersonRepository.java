@@ -1,4 +1,4 @@
-package ir.moke.example;
+package ir.moke.example.repository;
 
 import ir.moke.example.entity.Person;
 import ir.moke.microfox.db.jpa.annotation.*;
@@ -30,4 +30,11 @@ public interface PersonRepository {
 
     @Remove
     void delete(Person person);
+
+    @Criteria(provider = PersonCriteriaProvider.class)
+    List<Person> find(@QueryParam("id") Long id,
+                      @QueryParam("name") String name,
+                      @QueryParam("family") String family,
+                      @Offset int offset,
+                      @MaxResults int maxResult);
 }
