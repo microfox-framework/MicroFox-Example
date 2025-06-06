@@ -1,9 +1,8 @@
 package ir.moke.example;
 
 import ir.moke.microfox.redis.RedisFactory;
-import redis.clients.jedis.Jedis;
 
-import static ir.moke.microfox.MicroFox.*;
+import static ir.moke.microfox.MicroFox.redis;
 public class MainClass {
     static {
         initialize();
