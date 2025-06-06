@@ -2,8 +2,8 @@ package ir.moke.example;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import ir.moke.microfox.db.jpa.JpaConfig;
-import ir.moke.microfox.db.jpa.MicroFoxJpa;
+import ir.moke.microfox.jpa.JpaConfig;
+import ir.moke.microfox.jpa.JpaFactory;
 import org.h2.Driver;
 import org.hibernate.dialect.H2Dialect;
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -29,6 +29,6 @@ public class DB {
                 .setPackages(List.of("ir.moke.example.entity"))
                 .build();
 
-        MicroFoxJpa.register(hikariDataSource, databaseConfig);
+        JpaFactory.register(hikariDataSource, databaseConfig);
     }
 }

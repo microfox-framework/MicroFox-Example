@@ -2,7 +2,7 @@ package ir.moke.example.persistence.provider;
 
 import ir.moke.example.persistence.model.Address;
 import ir.moke.example.persistence.model.Client;
-import ir.moke.microfox.db.mybatis.MyBatisUtils;
+import ir.moke.microfox.api.mybatis.MyBatisUtils;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Map;

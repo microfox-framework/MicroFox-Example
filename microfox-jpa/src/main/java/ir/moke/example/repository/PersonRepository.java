@@ -1,8 +1,7 @@
 package ir.moke.example.repository;
 
 import ir.moke.example.entity.Person;
-import ir.moke.microfox.db.jpa.annotation.*;
-import jakarta.validation.constraints.Size;
+import ir.moke.microfox.jpa.annotation.*;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface PersonRepository {
     void save(Person person);
 
     @Query(value = "select p from Person p")
-    List<Person> find(@Offset int offset, @Size int size);
+    List<Person> find(@Offset int offset, @MaxResults int size);
 
     @Query(value = "select p from Person p")
     List<Person> find();

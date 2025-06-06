@@ -5,13 +5,13 @@ import ir.moke.example.persistence.mapper.AddressMapper;
 import ir.moke.example.persistence.mapper.ClientMapper;
 import ir.moke.example.persistence.model.Address;
 import ir.moke.example.persistence.model.Client;
-import ir.moke.kafir.utils.JsonUtils;
+import ir.moke.microfox.utils.JsonUtils;
 
 import java.util.List;
 
 import static ir.moke.microfox.MicroFox.mybatis;
 
-public class MyBatisRunner {
+public class MainClass {
     static {
         DB.initializeMyBatis();
         DB.initializeDatabase();

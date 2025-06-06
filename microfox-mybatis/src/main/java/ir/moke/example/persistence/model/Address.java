@@ -1,7 +1,6 @@
 package ir.moke.example.persistence.model;
 
-
-import jakarta.persistence.Column;
+import ir.moke.microfox.api.mybatis.Column;
 
 public class Address {
     private Long id;
@@ -10,9 +9,9 @@ public class Address {
     private String state;
     private String country;
 
-    @Column(name = "postal_code")
+    @Column("postal_code")
     private String postalCode;
-    @Column(name = "phone_number")
+    @Column("phone_number")
     private String phoneNumber;
 
     public Address() {

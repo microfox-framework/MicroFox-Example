@@ -2,8 +2,8 @@ package ir.moke.example.persistence;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import ir.moke.example.MyBatisRunner;
-import ir.moke.microfox.db.mybatis.MicroFoxMyBatis;
+import ir.moke.example.MainClass;
+import ir.moke.microfox.mybatis.MyBatisFactory;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
@@ -33,12 +33,12 @@ public class DB {
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.addMappers("ir.moke.example.persistence.mapper");
 
-        MicroFoxMyBatis.configure(hikariDataSource, configuration);
+        MyBatisFactory.configure(hikariDataSource, configuration);
     }
 
     public static void initializeDatabase() {
         try {
-            DataSource dataSource = MicroFoxMyBatis.getDatasourceMap("h2");
+            DataSource dataSource = MyBatisFactory.getDatasourceMap("h2");
             Connection connection = dataSource.getConnection();
             List<String> lines = loadSqlScript();
             if (lines != null) {
@@ -53,7 +53,7 @@ public class DB {
     }
 
     private static List<String> loadSqlScript() {
-        try (InputStream inputStream = MyBatisRunner.class.getClassLoader().getResourceAsStream("initialize_db.sql")) {
+        try (InputStream inputStream = MainClass.class.getClassLoader().getResourceAsStream("initialize_db.sql")) {
             if (inputStream != null) {
                 String content = new String(inputStream.readAllBytes());
                 return Arrays.stream(content.replaceAll("\\n", "").replaceAll("\\s+", " ").split(";")).toList();

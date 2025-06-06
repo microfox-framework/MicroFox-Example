@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import ir.moke.example.Client;
 import ir.moke.example.InMemoryDB;
-import ir.moke.microfox.http.Request;
-import ir.moke.microfox.http.Response;
-import ir.moke.microfox.http.Route;
+import ir.moke.microfox.api.http.Request;
+import ir.moke.microfox.api.http.Response;
+import ir.moke.microfox.api.http.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

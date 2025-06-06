@@ -8,7 +8,7 @@ import java.util.List;
 import static ir.moke.microfox.MicroFox.jpa;
 import static ir.moke.microfox.MicroFox.jpaTx;
 
-public class JpaRunner {
+public class MainClass {
     static {
         DB.initializeJPA();
     }

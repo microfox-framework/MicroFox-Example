@@ -1,7 +1,7 @@
 package ir.moke.example.repository;
 
 import ir.moke.example.entity.Person;
-import ir.moke.microfox.db.jpa.CriteriaProvider;
+import ir.moke.microfox.jpa.CriteriaProvider;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
