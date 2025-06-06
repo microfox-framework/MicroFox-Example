@@ -11,15 +11,13 @@ public class MainClass {
 
     public static void main(String[] args) {
         redis("my-redis",redis -> {
-            Jedis jedis = (Jedis) redis;
-            jedis.set("a1","Hello");
-            jedis.set("a2","Mahdi");
+            redis.set("a1","Hello");
+            redis.set("a2","Mahdi");
         });
 
         redis("my-redis",redis -> {
-            Jedis jedis = (Jedis) redis;
-            System.out.println(jedis.get("a1"));
-            System.out.println(jedis.get("a2"));
+            System.out.println(redis.get("a1"));
+            System.out.println(redis.get("a2"));
         });
     }
 
