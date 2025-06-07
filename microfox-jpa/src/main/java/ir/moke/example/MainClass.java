@@ -27,7 +27,8 @@ public class MainClass {
         });
 
         // Print all
-        jpa(PersonRepository.class, "h2", personRepository -> personRepository.find().forEach(System.out::println));
+        List<Person> list = jpa(PersonRepository.class, "h2", PersonRepository::find);
+        list.forEach(System.out::println);
 
         // Update
         person1.setName("Sina");
@@ -35,18 +36,18 @@ public class MainClass {
         jpaTx(PersonRepository.class, "h2", personRepository -> personRepository.update(person1));
 
         // Check update item
-        jpa(PersonRepository.class, "h2", personRepository -> System.out.println(personRepository.find(1)));
+        Person p = jpa(PersonRepository.class, "h2", personRepository -> personRepository.find(1));
+        System.out.println(p);
 
         // Delete item
         jpaTx(PersonRepository.class, "h2", personRepository -> personRepository.delete(personRepository.find(1)));
 
         // Print all
-        jpa(PersonRepository.class, "h2", personRepository -> personRepository.find().forEach(System.out::println));
+        List<Person> list2 = jpa(PersonRepository.class, "h2", PersonRepository::find);
+        list2.forEach(System.out::println);
 
         // Criteria Query
-        jpa(PersonRepository.class, "h2", personRepository -> {
-            List<Person> people = personRepository.find(2L, null, null, 0, 100);
-            System.out.println("Criteria search size: " + people.size());
-        });
+        List<Person> list3 = jpa(PersonRepository.class, "h2", personRepository -> personRepository.find(2L, null, null, 0, 100));
+        list3.forEach(System.out::println);
     }
 }
