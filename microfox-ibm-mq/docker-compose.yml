@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  ibm-mq:
+    image: icr.io/ibm-messaging/mq:latest
+    container_name: ibm-mq
+    ports:
+      - "1414:1414"   # MQ Listener Port
+      - "9443:9443"   # Web Console (HTTPS)
+    environment:
+      LICENSE: accept
+      MQ_QMGR_NAME: QM1
+      MQ_APP_USER: admin
+      MQ_APP_PASSWORD: adminpass
+      MQ_ADMIN_USER: admin
+      MQ_ADMIN_PASSWORD: adminpass
+    restart: unless-stopped
+
