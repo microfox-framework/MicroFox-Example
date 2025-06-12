@@ -2,31 +2,21 @@ package ir.moke.example;
 
 import ir.moke.example.controller.ClientControllerAdd;
 import ir.moke.example.controller.ClientControllerList;
-import ir.moke.microfox.api.http.Response;
+import ir.moke.microfox.api.http.sse.SseObject;
 
-import static ir.moke.microfox.MicroFox.httpGet;
-import static ir.moke.microfox.MicroFox.httpPost;
+import java.time.LocalTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static ir.moke.microfox.MicroFox.*;
 
 public class MainClass {
 
     public static void main(String[] args) {
-        httpGet("/api/v1/sse", (request, response) -> sseEventProducer(response));
+        sseRegister("H1", "/sse/hello");
         httpPost("/api/v1/client", new ClientControllerAdd());
         httpGet("/api/v1/client", new ClientControllerList());
-    }
 
-    private static void sseEventProducer(Response response) {
-        for (long i = 0; i < 10; i++) {
-            response.sse("log", "Hello dear !", String.valueOf(i), 3000L);
-            sleep();
-        }
-    }
-
-    private static void sleep() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> ssePublisher("H1", () -> new SseObject("Hello " + LocalTime.now())), 0, 2, TimeUnit.SECONDS);
     }
 }
